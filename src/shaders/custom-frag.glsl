@@ -169,6 +169,7 @@ void main()
 
     
         // FRESNEL
+        
         // ill add a bit of FRESNEL (lighter at glancing angles -- its cyan ish and not white tho)
         // dot between surface normal and view normal. aligned (high dot) = no/low fresnel
         vec3 viewDir = normalize(u_CameraPos - fs_Pos.xyz);
