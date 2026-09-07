@@ -2,6 +2,7 @@ import {vec3, vec4} from 'gl-matrix';
 import Drawable from '../rendering/gl/Drawable';
 import {gl} from '../globals';
 
+// this makes a black square basically
 class Square extends Drawable {
   indices: Uint32Array;
   positions: Float32Array;

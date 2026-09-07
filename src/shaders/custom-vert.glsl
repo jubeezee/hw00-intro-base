@@ -1,12 +1,5 @@
 #version 300 es
 
-//This is a vertex shader. While it is called a "shader" due to outdated conventions, this file
-//is used to apply matrix transformations to the arrays of vertex data passed to it.
-//Since this code is run on your GPU, each vertex is transformed simultaneously.
-//If it were run on your CPU, each vertex would have to be processed in a FOR loop, one at a time.
-//This simultaneous transformation allows your program to run much faster, especially when rendering
-//geometry with millions of vertices.
-
 uniform mat4 u_Model;       // The matrix that defines the transformation of the
                             // object we're rendering. In this assignment,
                             // this will be the result of traversing your scene graph.
@@ -28,10 +21,15 @@ in vec4 vs_Col;             // The array of vertex colors passed to the shader.
 out vec4 fs_Nor;            // The array of normals that has been transformed by u_ModelInvTr. This is implicitly passed to the fragment shader.
 out vec4 fs_LightVec;       // The direction in which our virtual light lies, relative to each vertex. This is implicitly passed to the fragment shader.
 out vec4 fs_Col;            // The color of each vertex. This is implicitly passed to the fragment shader.
+out vec4 fs_Pos;
 
 const vec4 lightPos = vec4(5, 5, 3, 1); //The position of our virtual light, which is used to compute the shading of
                                         //the geometry in the fragment shader.
 
+
+uniform float u_Time;
+
+// sin(u_Time * 1.7)
 
 void main()
 {
@@ -44,11 +42,34 @@ void main()
                                                             // perpendicular to the surface after the surface is transformed by
                                                             // the model matrix.
 
+    // deformedpos = modified vs_pos
+    vec4 deformedPos = vs_Pos;
 
-    vec4 modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below
+    // sin(POSITION * frequency + TIME * speed)
 
+    deformedPos.x += sin(vs_Pos.y * 4.8 + vs_Pos.z * 2.0 + u_Time * 5.0) * 0.05;
+    deformedPos.y += cos(vs_Pos.z * 3.2 + vs_Pos.z * 2.0 + u_Time * 3.0) * 0.06;
+    deformedPos.z += sin(vs_Pos.x * 3.6 + vs_Pos.y * 2.0 + u_Time * 4.0) * 0.05;
+
+    //deformedPos.x += sin(vs_Pos.y * 3.0 + vs_Pos.z * 2.0 + u_Time * 2.5) * 0.05;
+    //deformedPos.y += cos(vs_Pos.x * 2.5 + vs_Pos.z * 2.0 + u_Time * 2.0) * 0.06;
+    //deformedPos.z += sin(vs_Pos.x * 3.0 + vs_Pos.y * 2.0 + u_Time * 2.8) * 0.05;
+
+    //deformedPos.x += sin(vs_Pos.y * 3.0 + u_Time * 4.0) * 0.15;
+    //deformedPos.y += cos(vs_Pos.x * 2.0 + u_Time * 2.0) * 0.2;
+    //deformedPos.z += sin((vs_Pos.x + vs_Pos.y) * 4.0 + u_Time * 3.0) * 0.1;
+
+
+
+    vec4 modelposition = u_Model * deformedPos;   // Temporarily store the transformed vertex positions for use below
+    
+    // export fs_pos (model position) info for our frag shader to use
+    fs_Pos = modelposition;
+
+    // export light, a vec made from lightpos - transformed vertex pos
     fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies
 
+    // final screen draw position for the vert
     gl_Position = u_ViewProj * modelposition;// gl_Position is a built-in variable of OpenGL which is
                                              // used to render the final positions of the geometry's vertices
 }
