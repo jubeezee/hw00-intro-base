@@ -5,7 +5,7 @@
 
 For HW0, I created a stylized animated water cube.
 
-The cube uses layered 3D Worley noise to generate animated caustic-like patterns across its surface. I combined multiple noise scales to create large flowing patterns with smaller details, along with three-way color mixes and custom mixing rules. The material also uses transparency, Lambert lighting, and a subtle Fresnel effect to create a translucent, watery appearance.
+The cube uses layered 3D Worley noise to generate animated caustic-like patterns across its surface. I combined multiple noise scales to create large flowing patterns with smaller details, along with three-way color mixes, custom mixing rules, and custom animation behavior for each noise scale. The material also uses transparency, Lambert lighting, and a subtle Fresnel effect to create a translucent, watery appearance.
 
 The custom vertex shader uses trigonometric functions and time to non-uniformly deform the cube's vertices, giving the cube an organic wobbling motion (which is as close to a "wave" pattern as I can get with limited verts).
 
