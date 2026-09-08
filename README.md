@@ -1,5 +1,32 @@
 # HW 0: Intro to Javascript and WebGL
 
+
+# Stylized Water Cube
+
+For HW0, I created a stylized animated water cube.
+
+The cube uses layered 3D Worley noise to generate animated caustic-like patterns across its surface. I combined multiple noise scales to create large flowing patterns with smaller details, along with three-way color mixes and custom mixing rules. The material also uses transparency, Lambert lighting, and a subtle Fresnel effect to create a translucent, watery appearance.
+
+The custom vertex shader uses trigonometric functions and time to non-uniformly deform the cube's vertices, giving the cube an organic wobbling motion (which is as close to a "wave" pattern as I can get with limited verts).
+
+## Live Demo
+
+https://jubeezee.github.io/hw00-intro-base/
+
+
+## Screenshot
+
+![Water Cube Screenshot 1](screenshot1.png)
+
+![Water Cube Screenshot 2](screenshot2.png)
+
+
+
+
+
+
+
+
 <p align="center">
   <img width="360" height="360" src="https://user-images.githubusercontent.com/1758825/132532354-e3a45402-e484-499e-bfa7-2d73b9f2c946.png">
 </p>
